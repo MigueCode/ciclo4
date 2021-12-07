@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserController {
 
     @Autowired
@@ -26,4 +26,29 @@ public class UserController {
     public User save(@RequestBody User user){
         return userService.create(user);
     }
+
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User update(@RequestBody User user){
+        return userService.update(user);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public boolean delete(@PathVariable("id") Integer id){
+        return userService.delete(id);
+    }
+
+    @GetMapping("/{email}/{password}")
+    public User auth(@PathVariable("email") String email, @PathVariable("password") String password){
+        return userService.authUser(email, password);
+    }
+
+    @GetMapping("/emailexist/{email}")
+    public boolean emailExists(@PathVariable("email") String email){
+        return userService.emailExists(email);
+    }
+
+
 }

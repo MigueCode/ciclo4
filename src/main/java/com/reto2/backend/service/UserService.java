@@ -32,7 +32,7 @@ public class UserService {
         if (e.isPresent()) {
             return user;
         }
-        if (emailExists(user.getEmail())==true){
+        if (emailExists(user.getEmail())){
                 return user;
         }
 
@@ -48,7 +48,7 @@ public class UserService {
         }
         Optional<User> userDb = userRepository.getUser(user.getId());
 
-            if (!userDb.isPresent()) {
+            if (userDb.isEmpty()) {
                 return user;
             }
                 if (user.getIdentification() != null) {
@@ -88,11 +88,17 @@ public class UserService {
     }
 
     public boolean emailExists(String email){
-        Optional<User> emailUser = userRepository.emailExists(email);
-        if (emailUser.isPresent()){
-            return true;
+        return userRepository.emailExists(email);
+    }
+
+    public User authUser(String email, String password){
+        Optional<User> e = userRepository.authUser(email, password);
+
+        if (e.isEmpty()){
+            return new User();
         }
-        return false;
+
+        return e.get();
     }
 
 }

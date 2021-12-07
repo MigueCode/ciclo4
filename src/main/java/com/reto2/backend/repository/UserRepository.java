@@ -15,7 +15,7 @@ public class UserRepository {
     private UserCrudRepository userCrudRepository;
 
     public List<User> getAll(){
-        return userCrudRepository.findAll();
+        return (List<User>) userCrudRepository.findAll();
     }
 
     public Optional<User> getUser(Integer id){
@@ -34,11 +34,16 @@ public class UserRepository {
         userCrudRepository.delete(user);
     }
 
-    public Optional<User> emailExists(String email){
-        return userCrudRepository.findByEmail(email);
+    public boolean emailExists(String email){
+        Optional<User> userEmail = userCrudRepository.findByEmail(email);
+        return userEmail.isPresent();
     }
 
     public Optional<User> authUser(String email, String password){
         return userCrudRepository.findByEmailAndPassword(email, password);
+    }
+
+    public Optional<User> getUserByNameOrEmail(String name, String email){
+        return userCrudRepository.findByNameOrEmail(name,email);
     }
 }
