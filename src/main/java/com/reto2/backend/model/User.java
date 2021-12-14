@@ -27,4 +27,19 @@ public class User {
     private String zone;
     private String type;
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getMonthBirthDay() {
+        return monthBirthDay;
+    }
+
+    public void setMonthBirthDay(String monthBirthDay) {
+        this.monthBirthDay = monthBirthDay;
+    }
 }
